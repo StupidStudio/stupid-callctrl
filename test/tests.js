@@ -1,10 +1,50 @@
 var test = require('tape');
-var iterator = require('../iterator');
+var callctrl = require('../callctrl');
 
-test('Gets next item', function (t) {
-    t.plan(1);
-	var collection = [{name:'one'}, {name:'two'}, {name:'three'}, {name:'four'}];
-	var current = collection[0];
-	current = iterator.next(current, collection);
-	t.equal(current, collection[1]);
+test('Only call callback once until reset', function (t) {
+    t.plan(2);
+	var once = callctrl.once(function(){
+		t.ok(true);
+	});
+	once.trigger();
+	once.trigger();
+	once.reset();
+	once.trigger();
+	once.trigger();
+});
+
+test('Only call callbacks once until shifted', function (t) {
+    t.plan(2);
+    var a = 0;
+    var b = 0;
+	var shift = callctrl.shift(function(){
+		a++;
+	}, function (){
+		b++;
+	});
+	shift.alpha(); // alpha
+	shift.alpha(); // nothing
+	shift.beta(); // beta
+	shift.beta(); // nothing
+	shift.alpha(); // alpha
+	t.equal(a, 2);
+	t.equal(b, 1);
+});
+
+test('Toggle between callbacks, if reset call first callback', function (t) {
+    t.plan(2);
+    var a = 0;
+    var b = 0;
+	var toggle = callctrl.toggle(function(){
+		a++;
+	}, function(){
+		b++;
+	});
+	toggle.trigger(); // alpha
+	toggle.trigger(); // beta
+	toggle.trigger(); // alpha
+	toggle.reset();
+	toggle.trigger(); // alpha
+	t.equal(a, 3);
+	t.equal(b, 1);
 });
