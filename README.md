@@ -1,7 +1,7 @@
 # Stupid Call Controller
 A call controller to control how to call functions.
 
-## usage
+## Usage
 
 ```javascript
 
@@ -16,7 +16,7 @@ once.trigger(); // doesn't trigger
 once.reset(); // reset
 once.trigger(); // trigger
 
-//shift
+// Shift
 var shift = callctrl.shift(function(){
 	console.log('Shift Alpha');
 }, function (){
@@ -28,7 +28,7 @@ shift.beta(); // trigger
 shift.beta(); // doesn't trigger
 shift.alpha(); // trigger
 
-//toggle
+// Toggle
 var toggle = callctrl.toggle(function(){
 	console.log("Toggle Alpha");
 }, function(){
