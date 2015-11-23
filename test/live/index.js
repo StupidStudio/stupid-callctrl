@@ -1,7 +1,33 @@
-var iterator = require('../../iterator');
-iterator.nextOrFalse(current, collection);
-iterator.prevOrFalse(current, collection);
-iterator.isFirst(current, collection);
-iterator.isPrev(current, collection);
-iterator.add(object, collection);
-iterator.remove(object, collection);
+var callctrl = require('../../callctrl');
+// Once
+var once = callctrl.once(function(){
+	console.log("Call my once");
+});
+once.trigger();
+once.trigger();
+once.reset();
+once.trigger();
+
+//shift
+var shift = callctrl.shift(function(){
+	console.log('Shift Alpha');
+}, function (){
+	console.log('Shift Beta');
+});
+shift.alpha();
+shift.alpha();
+shift.beta();
+shift.beta();
+shift.alpha();
+
+//toggle
+var toggle = callctrl.toggle(function(){
+	console.log("Toggle Alpha");
+}, function(){
+	console.log("Toggle Beta");
+});
+toggle.trigger();
+toggle.trigger();
+toggle.trigger();
+toggle.reset();
+toggle.trigger();

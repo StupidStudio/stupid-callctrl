@@ -1,70 +1,79 @@
 /**
  * Call controller
- * @example example
- * @param {type} varname description
- * @config {type} varname description
- * @return {type} description
  */
-function Callctrl(opts){
-	var self = {};
-	var opts = opts || {};
-
-	function once(callback){
-		var called = false;
+var callctrl = {
+	/**
+	 * Once (call a function once)
+	 * @example once.trigger(); once.reset();
+	 * @param {function} callback The callback
+	 * @config {boolean} bool Boolean to control actions
+	 * @return {object} Returns a object to trigger callback
+	 */
+	once: function once(callback){
+		var bool = false;
 		return{
 			trigger:function(){
-				if(called) return;
+				if(bool) return;
 				callback();
-				called = true;
+				bool = true;
 			},
 			reset:function(){
-				called = false;
+				bool = false;
 			}	
 		}
-	}
+	},
 
-	function switch(a, b){
-		var c = false;
-		var a = a || function(){};
-		var b = b || function(){};
-
+	/**
+	 * Shift (callbackA can only be called once, until callbackB has been called)
+	 * @example shift.alpha(); shift.beta();
+	 * @param {function} callbackA The callback
+	 * @param {function} callbackB The callback
+	 * @config {boolean} bool Boolean to control actions
+	 * @return {object} Returns a object to trigger callbacks
+	 */
+	shift: function shift(callbackA, callbackB){
+		var bool = false;
+		var callbackA = callbackA || function(){};
+		var callbackB = callbackB || function(){};
 		return {
 			alpha:function() {
-				if(c) return;
-				a();
-				c = true;
+				if(bool) return;
+				callbackA();
+				bool = true;
 			},
 			beta:function() {
-				if(!c) return;
-				b();
-				c = false;
+				if(!bool) return;
+				callbackB();
+				bool = false;
 			}
 		}
-	}
+	},
 
-	function toggle(active,deactive){
-		var toggle = true;
+	/**
+	 * Toggle (toggle between callbackA and callbackB)
+	 * @example toggle.trigger(); toggle.reset();
+	 * @param {function} callbackA The callback
+	 * @param {function} callbackB The callback
+	 * @config {boolean} bool Boolean to control actions
+	 * @return {object} Returns a object to trigger callbacks
+	 */
+	toggle: function toggle(callbackA, callbackB){
+		var bool = true;
 		return {
 			trigger: function() {
-				if(toggle){
-		 			active();
+				if(bool){
+		 			callbackA();
 		 		}else{
-		 			deactive();
+		 			callbackB();
 		 		}
-	 			toggle = !toggle;
+	 			bool = !bool;
 			},
 			reset:function(){
-				toggle = true;	
+				bool = true;	
 			}
 		}
 	}
-
-	self.once = once;
-	self.switch = switch;
-	self.toggle = toggle;
-
-	return self;
 }
 
- 
-module.exports = Callctrl;
+/** @export */
+module.exports = callctrl;
