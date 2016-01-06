@@ -14,8 +14,8 @@ var callctrl = {
 		return{
 			trigger:function(){
 				if(bool) return;
-				callback();
 				bool = true;
+				callback();
 			},
 			reset:function(){
 				bool = false;
@@ -38,13 +38,13 @@ var callctrl = {
 		return {
 			alpha:function() {
 				if(bool) return;
-				callbackA();
 				bool = true;
+				callbackA();
 			},
 			beta:function() {
 				if(!bool) return;
-				callbackB();
 				bool = false;
+				callbackB();
 			}
 		}
 	},
