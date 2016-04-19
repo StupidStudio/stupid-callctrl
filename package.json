@@ -1,6 +1,6 @@
 {
   "name": "stupid-callctrl",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A call controller to control how to call functions.",
   "main": "./callctrl.js",
   "dependencies": {},
