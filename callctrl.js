@@ -15,7 +15,7 @@ var callctrl = {
 			trigger:function(){
 				if(bool) return;
 				bool = true;
-				callback();
+				callback.apply(window, Array.prototype.slice.call(arguments));
 			},
 			reset:function(){
 				bool = false;
@@ -39,12 +39,12 @@ var callctrl = {
 			alpha:function() {
 				if(bool) return;
 				bool = true;
-				callbackA();
+				callbackA.apply(window, Array.prototype.slice.call(arguments));
 			},
 			beta:function() {
 				if(!bool) return;
 				bool = false;
-				callbackB();
+				callbackB.apply(window, Array.prototype.slice.call(arguments));
 			}
 		}
 	},
@@ -62,9 +62,9 @@ var callctrl = {
 		return {
 			trigger: function() {
 				if(bool){
-		 			callbackA();
+		 			callbackA.apply(window, Array.prototype.slice.call(arguments));
 		 		}else{
-		 			callbackB();
+		 			callbackB.apply(window, Array.prototype.slice.call(arguments));
 		 		}
 	 			bool = !bool;
 			},
