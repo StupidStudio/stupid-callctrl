@@ -19,6 +19,9 @@ var callctrl = {
 			},
 			reset:function(){
 				bool = false;
+			},
+			disable:function(){
+				bool = true;
 			}	
 		}
 	},

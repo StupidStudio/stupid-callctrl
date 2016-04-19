@@ -16,6 +16,12 @@ once.trigger(); // doesn't trigger
 once.reset(); // reset
 once.trigger(); // trigger
 
+// Disable
+once.disable();
+once.trigger(); // doesn't trigger
+once.reset(); // reset
+once.trigger(); // trigger
+
 // Shift
 var shift = callctrl.shift(function(){
 	console.log('Shift Alpha');
