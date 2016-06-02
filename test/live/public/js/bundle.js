@@ -15,11 +15,14 @@ var callctrl = {
 		return{
 			trigger:function(){
 				if(bool) return;
-				callback();
 				bool = true;
+				return callback.apply(window, Array.prototype.slice.call(arguments));
 			},
 			reset:function(){
 				bool = false;
+			},
+			disable:function(){
+				bool = true;
 			}	
 		}
 	},
@@ -39,13 +42,13 @@ var callctrl = {
 		return {
 			alpha:function() {
 				if(bool) return;
-				callbackA();
 				bool = true;
+				return callbackA.apply(window, Array.prototype.slice.call(arguments));
 			},
 			beta:function() {
 				if(!bool) return;
-				callbackB();
 				bool = false;
+				return callbackB.apply(window, Array.prototype.slice.call(arguments));
 			}
 		}
 	},
@@ -63,11 +66,13 @@ var callctrl = {
 		return {
 			trigger: function() {
 				if(bool){
-		 			callbackA();
+					bool = !bool;
+		 			return callbackA.apply(window, Array.prototype.slice.call(arguments));
 		 		}else{
-		 			callbackB();
+		 			bool = !bool;
+		 			return callbackB.apply(window, Array.prototype.slice.call(arguments));
 		 		}
-	 			bool = !bool;
+	 			
 			},
 			reset:function(){
 				bool = true;	
@@ -84,33 +89,38 @@ var callctrl = require('../../callctrl');
 // Once
 var once = callctrl.once(function(){
 	console.log("Call my once");
+	return "text once";
 });
-once.trigger();
-once.trigger();
+console.log(once.trigger());
+console.log(once.trigger());
 once.reset();
-once.trigger();
+console.log(once.trigger()); 
 
 //shift
 var shift = callctrl.shift(function(){
 	console.log('Shift Alpha');
+	return "text shift alpha";
 }, function (){
 	console.log('Shift Beta');
+	return "text shift beta";
 });
-shift.alpha();
-shift.alpha();
-shift.beta();
-shift.beta();
-shift.alpha();
+console.log(shift.alpha());
+console.log(shift.alpha());
+console.log(shift.beta());
+console.log(shift.beta());
+console.log(shift.alpha());
 
 //toggle
 var toggle = callctrl.toggle(function(){
 	console.log("Toggle Alpha");
+	return "text toggle alpha";
 }, function(){
 	console.log("Toggle Beta");
+	return "text toggle beta";
 });
-toggle.trigger();
-toggle.trigger();
-toggle.trigger();
+console.log(toggle.trigger());
+console.log(toggle.trigger());
+console.log(toggle.trigger());
 toggle.reset();
-toggle.trigger();
+console.log(toggle.trigger());
 },{"../../callctrl":1}]},{},[2]);
